@@ -329,14 +329,14 @@ export default function Home() {
 
       {/* 모달 컴포넌트 */}
 
-      {/* {modalState.isOpen &&
+      {modalState.isOpen &&
         modalState.bookList &&
         modalState.bookList.length > 0 && (
           <FullScreenModal
             bookList={modalState.bookList}
             onClose={closeModal}
           />
-        )} */}
+        )}
 
       <style jsx>{`
         @keyframes fade-in {
