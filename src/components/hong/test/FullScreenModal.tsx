@@ -52,6 +52,7 @@ export default function FullScreenModal({
           );
           if (index < bookList[currentIndex].contents.length) {
             setCurrentContentIndex(index); // 현재 보이는 콘텐츠 인덱스 업데이트
+            setTimeout(() => setShowHint(false), 5000); // 5초 후 힌트 숨기기
           }
         }
       });
@@ -81,11 +82,11 @@ export default function FullScreenModal({
   const currentContent = currentBook.contents[currentContentIndex];
 
   const formattedDescription = currentContent.textContents
-    .split(".")
+    .split("\n")
     .filter((sentence) => sentence.trim() !== "")
     .map((sentence, index) => (
       <span key={index} className="block mb-2">
-        {sentence.trim() + "."}
+        {sentence.trim() + "\n"}
       </span>
     ));
 
@@ -151,6 +152,16 @@ export default function FullScreenModal({
               ))}
             </CarouselContent>
           </Carousel>
+          {showHint && (
+            <div className="absolute top-1/2 right-8 transform -translate-y-1/2 animate-slide-icon">
+              <Image
+                src="/images/slider.png"
+                alt="Slide hint"
+                width={25}
+                height={25}
+              />
+            </div>
+          )}
         </div>
         <div
           className={`w-full max-w-2xl mt-4 px-4 pb-8 ${
