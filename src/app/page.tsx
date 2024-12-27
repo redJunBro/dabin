@@ -278,7 +278,7 @@ export default function Home() {
         </div>
         <div className="absolute inset-0 w-full h-full flex flex-col items-center justify-end pb-2">
           <div className="text-lg font-semibold font-ylee">
-            짧은 글로 담아낸 작은 마음, 너에게 닿기를
+            아직도 자라는 어른이들에게
           </div>
         </div>
 
