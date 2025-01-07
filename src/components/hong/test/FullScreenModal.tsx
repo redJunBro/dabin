@@ -22,6 +22,7 @@ export default function FullScreenModal({
   }
 
   const [currentIndex, setCurrentIndex] = useState(0);
+
   const [closing, setClosing] = useState(false);
   const [titleVisible, setTitleVisible] = useState(false);
   const [subDescriptionVisible, setSubDescriptionVisible] = useState(false);
@@ -81,14 +82,21 @@ export default function FullScreenModal({
 
   const currentContent = currentBook.contents[currentContentIndex];
 
-  const formattedDescription = currentContent.textContents
-    .split("\n")
-    .filter((sentence) => sentence.trim() !== "")
-    .map((sentence, index) => (
-      <span key={index} className="block mb-2">
-        {sentence.trim() + "\n"}
-      </span>
-    ));
+  const formatTextContents = (textContents: string): JSX.Element[] => {
+    return textContents
+      .split("\n")
+      .filter((sentence) => sentence.trim() !== "")
+      .map((sentence, index) => (
+        <span
+          key={index}
+          className={
+            index === 0 ? "block mb-5 pt-5 font-bold text-lg" : "block mb-2"
+          }
+        >
+          {sentence.trim() + "\n"}
+        </span>
+      ));
+  };
 
   const handleClose = () => {
     setClosing(true);
@@ -97,7 +105,7 @@ export default function FullScreenModal({
 
   return (
     <div
-      className={`fixed inset-0 z-50 bg-[#f9f9f9] text-white overflow-y-auto flex flex-col items-center ${
+      className={`fixed inset-0 z-50 bg-[#e2e2e2] text-white overflow-y-auto flex flex-col items-center ${
         closing ? "animate-slide-down" : "animate-slide-up"
       }`}
     >
@@ -114,7 +122,7 @@ export default function FullScreenModal({
           }`}
         >
           <h2 className="text-xl font-semibold text-gray-700 font-JejuMyeongjo">
-            {currentBook.title}
+            {currentBook.description}
           </h2>
           <p className="text-xs text-gray-500 font-JejuMyeongjo">
             {currentBook.subTitle}
@@ -139,20 +147,43 @@ export default function FullScreenModal({
                   className="flex-[0_0_100%] px-2"
                   data-index={index}
                 >
-                  <div className="relative w-full rounded-lg overflow-hidden shadow-md">
-                    <Image
-                      src={content.imege}
-                      width={800}
-                      height={600}
-                      alt="Book image"
-                      className="object-cover rounded-lg w-full h-auto"
-                    />
+                  {content.imege && (
+                    <div className="relative w-full rounded-lg overflow-hidden">
+                      <Image
+                        src={content.imege}
+                        width={800}
+                        height={600}
+                        alt="Book image"
+                        className="object-cover rounded-lg w-full h-auto"
+                      />
+                    </div>
+                  )}
+                  <div
+                    className={`w-full max-w-2xl mt-4 px-4 pb-8 ${
+                      descriptionVisible
+                        ? animateDescription
+                          ? "animate-slide-fade-in"
+                          : ""
+                        : "hidden"
+                    }`}
+                  >
+                    <p
+                      className="text-gray-800 font-kopub"
+                      style={{
+                        letterSpacing: "-0.2px",
+                        marginBottom: "calc(18px * 2.0)",
+                        lineHeight: "1.9",
+                        fontWeight: 400,
+                      }}
+                    >
+                      {formatTextContents(content.textContents)}
+                    </p>
                   </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
           </Carousel>
-          {showHint && (
+          {/* {showHint && (
             <div className="absolute top-1/2 right-8 transform -translate-y-1/2 animate-slide-icon">
               <Image
                 src="/images/slider.png"
@@ -161,28 +192,7 @@ export default function FullScreenModal({
                 height={25}
               />
             </div>
-          )}
-        </div>
-        <div
-          className={`w-full max-w-2xl mt-4 px-4 pb-8 ${
-            descriptionVisible
-              ? animateDescription
-                ? "animate-slide-fade-in"
-                : ""
-              : "hidden"
-          }`}
-        >
-          <p
-            className="text-gray-800 font-kopub"
-            style={{
-              letterSpacing: "-0.2px",
-              marginBottom: "calc(18px * 2.0)",
-              lineHeight: "1.9",
-              fontWeight: 400,
-            }}
-          >
-            {formattedDescription}
-          </p>
+          )} */}
         </div>
       </div>
       <style jsx>{`
