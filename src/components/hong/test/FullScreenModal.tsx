@@ -34,6 +34,14 @@ export default function FullScreenModal({
   const currentBook = bookList[currentIndex];
   const [currentContentIndex, setCurrentContentIndex] = useState(0); // useState로 변경
 
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0; // 스크롤 컨테이너의 스크롤을 최상단으로 설정
+    }
+  }, [currentContentIndex]); // currentContentIndex가 변경될 때마다 실행
+
   useEffect(() => {
     const carouselElement = carouselRef.current;
     if (!carouselElement) return;
@@ -117,6 +125,8 @@ export default function FullScreenModal({
       className={`fixed inset-0 z-50 bg-[#e2e2e2] text-white overflow-y-auto flex flex-col items-center ${
         closing ? "animate-slide-down" : "animate-slide-up"
       }`}
+      ref={scrollContainerRef}
+      style={{ scrollBehavior: "smooth" }}
     >
       <div className="relative w-full max-w-2xl mx-auto flex flex-col items-center bg-[#e2e2e2]">
         <button
@@ -156,10 +166,10 @@ export default function FullScreenModal({
                   className="flex-[0_0_100%] px-2"
                   data-index={index}
                 >
-                  {content.imege && (
+                  {content.image && (
                     <div className="relative w-full rounded-lg overflow-hidden">
                       <Image
-                        src={content.imege}
+                        src={content.image}
                         width={800}
                         height={600}
                         alt="Book image"
@@ -192,16 +202,16 @@ export default function FullScreenModal({
               ))}
             </CarouselContent>
           </Carousel>
-          {/* {showHint && (
-            <div className="absolute top-1/2 right-8 transform -translate-y-1/2 animate-slide-icon">
+          {showHint && bookList[currentIndex].contents.length > 1 ? (
+            <div className="absolute top-10 right-8 transform -translate-y-1/2 animate-slide-icon">
               <Image
-                src="/images/slider.png"
+                src="/images/slider2.png"
                 alt="Slide hint"
                 width={25}
                 height={25}
               />
             </div>
-          )} */}
+          ) : null}
         </div>
       </div>
       <style jsx>{`
