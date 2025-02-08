@@ -84,18 +84,27 @@ export default function FullScreenModal({
 
   const formatTextContents = (textContents: string): JSX.Element[] => {
     return textContents
-      .split("\n")
-      .filter((sentence) => sentence.trim() !== "")
-      .map((sentence, index) => (
-        <span
-          key={index}
-          className={
-            index === 0 ? "block mb-5 pt-5 font-bold text-lg" : "block mb-2"
-          }
-        >
-          {sentence.trim() + "\n"}
-        </span>
-      ));
+      .split(/\n{1,2}/) // \n 또는 \n\n을 기준으로 분리
+      .filter((sentence) => sentence.trim() !== "") // 빈 문자열 제거
+      .map((sentence, index, array) => {
+        const isDoubleNewline =
+          index < array.length - 1 && textContents.includes(`${sentence}\n\n`); // \n\n 여부 판단
+
+        return (
+          <span
+            key={index}
+            className={
+              isDoubleNewline
+                ? "block mb-5" // \n\n인 경우 여백 크게
+                : index === 0
+                ? "block mb-5 pt-5 font-bold text-xl" // 첫 번째 문장 스타일
+                : "block mb-2" // 일반 \n 스타일
+            }
+          >
+            {sentence.trim()}
+          </span>
+        );
+      });
   };
 
   const handleClose = () => {
