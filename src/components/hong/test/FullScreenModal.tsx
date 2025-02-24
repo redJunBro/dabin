@@ -103,10 +103,10 @@ export default function FullScreenModal({
             key={index}
             className={
               isDoubleNewline
-                ? "block mb-5" // \n\n인 경우 여백 크게
+                ? "block mb-6" // \n\n인 경우 여백 크게
                 : index === 0
-                ? "block mb-5 pt-5 font-bold text-xl" // 첫 번째 문장 스타일
-                : "block mb-2" // 일반 \n 스타일
+                ? "block mb-6 pt-5 font-bold text-xl" // 첫 번째 문장 스타일
+                : "block mb-1" // 일반 \n 스타일
             }
           >
             {sentence.trim()}

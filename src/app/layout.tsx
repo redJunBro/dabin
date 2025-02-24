@@ -28,7 +28,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* Google Analytics */}
-        <meta property="og:image" content="/images/bug.png" />
+        <meta property="og:image" content="/images/id2_cover.png" />
       </head>
 
       <body
