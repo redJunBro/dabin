@@ -171,8 +171,8 @@ export const BookData: Book[] = [
     category: "시",
     view: 3,
     title: "봄, 여름, 가을, 겨울. '사계절_그리운 계절'",
-    subTitle: "사계절_그리운 계절",
-    description: "꽃부터 나뭇가지",
+    subTitle: "그리운 계절",
+    description: "사계절",
     price: 300,
     subdescription:
       "이 책은 어떠 어떠한 책이고, 독자들에게 이런 메세지를 주고 싶습니다 ~",
